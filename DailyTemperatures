@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class DailyTemperatures {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> daysOfWeek = new ArrayList<>();
+        ArrayList<Double> temperatures = new ArrayList<>();
+
+        // Store data in array lists
+        storeData(daysOfWeek, temperatures);
+
+        // Prompt the user for input and display temperatures accordingly
+        promptUserAndDisplayData(scanner, daysOfWeek, temperatures);
+    }
+
+    private static void storeData(ArrayList<String> daysOfWeek, ArrayList<Double> temperatures) {
+        // Store the days of the week
+        daysOfWeek.add("Monday");
+        daysOfWeek.add("Tuesday");
+        daysOfWeek.add("Wednesday");
+        daysOfWeek.add("Thursday");
+        daysOfWeek.add("Friday");
+        daysOfWeek.add("Saturday");
+        daysOfWeek.add("Sunday");
+
+        // Store daily average temperatures for one week
+        temperatures.add(75.2); // Monday
+        temperatures.add(78.5); // Tuesday
+        temperatures.add(80.0); // Wednesday
+        temperatures.add(77.3); // Thursday
+        temperatures.add(79.9); // Friday
+        temperatures.add(82.1); // Saturday
+        temperatures.add(81.4); // Sunday
+    }
+
+    private static void promptUserAndDisplayData(Scanner scanner, ArrayList<String> daysOfWeek, ArrayList<Double> temperatures) {
+        boolean done = false;
+        while (!done) {
+            System.out.println("Enter a day of the week (Monday through Sunday) or 'week' to display weekly average: ");
+            String userInput = scanner.nextLine();
+
+            if (userInput.equalsIgnoreCase("week")) {
+                // Display the temperatures for each day and the weekly average
+                displayWeeklyData(daysOfWeek, temperatures);
+                done = true;
+            } else if (daysOfWeek.contains(userInput)) {
+                // Display the temperature for the specified day
+                int index = daysOfWeek.indexOf(userInput);
+                double temperature = temperatures.get(index);
+                System.out.println("Temperature for " + userInput + ": " + temperature + "°F");
+            } else {
+                System.out.println("Invalid input. Please enter a valid day of the week or 'week'.");
+            }
+        }
+    }
+
+    private static void displayWeeklyData(ArrayList<String> daysOfWeek, ArrayList<Double> temperatures) {
+        double sum = 0;
+        for (int i = 0; i < daysOfWeek.size(); i++) {
+            String day = daysOfWeek.get(i);
+            double temperature = temperatures.get(i);
+            System.out.println(day + ": " + temperature + "°F");
+            sum += temperature;
+        }
+        double weeklyAverage = sum / daysOfWeek.size();
+        System.out.println("Weekly average temperature: " + weeklyAverage + "°F");
+    }
+}
